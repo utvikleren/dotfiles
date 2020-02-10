@@ -22,6 +22,8 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias ls='ls --color=auto'
 alias gr='grep -r'
 alias head='head -n 50'
+alias vim='nvim'
+alias vi='vim'
 
 # misc other aliases
 alias alh='alembic history | head -n 10'
@@ -31,8 +33,8 @@ alias update-all='sudo apt update; sudo apt upgrade -y; sudo apt autoremove'
 
 alias vsc='vim ~/.ssh/config'
 alias vb='vim ~/.bashrc'
+alias vba='vim ~/.bash_aliases'
 alias sb='source ~/.bashrc'
-
 
 
 # git aliases
