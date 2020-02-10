@@ -1,0 +1,13 @@
+session_name: base
+windows:
+- focus: 'true'
+  layout: 5c6f,205x54,0,0{114x54,0,0[114x26,0,0,1,114x27,0,27,2],90x54,115,0[90x34,115,0,3,90x19,115,35,5]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - ssa; ssh -fN bastion; echo 'connected to bastion!'; sshd
+  - pane
+  - vim '+/in progress/' ~/notes/daily.txt
+  - dt
+  start_directory: /home/msteen
+  window_name: home
