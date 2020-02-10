@@ -40,28 +40,12 @@ case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
+# function to get the prefix of the git branch (up to the slash) for inclusion in the prompt
+parse_git_branch() {
+	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /' -e 's/(\(.*\)\/.*)/(\1)/'
+}
+# define a prompt assuming that colors work: git branch prefix, user@host, and basename of working directory
+PS1="\[\033[01;33m\]\$(parse_git_branch)\[\033[01;33m\]\u@\h\[\033[00m\]:\[\033[34m\]\W \[\033[00m\]\$ "
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -103,15 +87,15 @@ export PATH="$PATH:$GOPATH/bin"
 # old path:
 # declare -x PATH="/home/msteen/.local/bin:/home/msteen/personal/go/bin:/snap/bin:/home/msteen/personal/go/bin:/snap/bin:/home/msteen/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
+
+# external files
+
+# inputrc
 if [ -f ~/.inputrc ]; then
     . ~/.inputrc
 fi
 
 # Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
