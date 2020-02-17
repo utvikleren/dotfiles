@@ -1,0 +1,160 @@
+ServerAliveInterval 150
+ServerAliveCountMax 6
+# Tells SSH to re-use existing tunnels for multiple connections to the same server
+ControlMaster auto
+ControlPath ~/.ssh/%C
+
+StrictHostKeyChecking no
+
+# bastion proxy, with many tunnels
+
+Host 			bastion
+Hostname        bastion.cmd.dpn.inmar.com
+User            msteen
+IdentityFile    /home/msteen/.ssh/inmar/private.pem
+ForwardAgent    yes
+
+# QA API
+LocalForward	localhost:8765 qa-api.dev.dpn.inmar.com:80
+
+# Jenkins front end
+LocalForward 	8089 qa-ws-jenkins.dev.dpn.inmar.com:80
+# LocalForward	8090 qa-jenkins-master-ws-01.dev.dpn.inmar.com:80
+
+
+# DB tunnels
+
+# OH QA DB (PG common is shared for all QA PG dbs)
+LocalForward    localhost:5430 qa-pg-common-write.dev.dpn.inmar.com:5432
+# OH STAGE DB
+LocalForward    localhost:5434 stage-pg-common-write.prd.dpn.inmar.com:5432
+# OH INT DB
+LocalForward    localhost:5431 integration-pg-common-write.prd.dpn.inmar.com:5432
+# OH PROD DB
+LocalForward    localhost:5433 prod-pg-common-write.prd.dpn.inmar.com:5432
+
+# WS QA DB
+LocalForward    localhost:3307 qa-rds-db-aurora-write.dev.dpn.inmar.com:3306
+# WS INT DB
+LocalForward    localhost:3308 int-db-common-write.prd.dpn.inmar.com:3306
+
+# WS Stage 00
+LocalForward	localhost:3309 stage-aurora-dpn-00-write.prd.dpn.inmar.com:3306
+#LocalForward	localhost:3309 stage-aurora-dpn-00-read.prd.dpn.inmar.com:3306
+# WS Stage 01
+LocalForward	localhost:3310 stage-aurora-dpn-01-write.prd.dpn.inmar.com:3306
+#LocalForward	localhost:3310 stage-aurora-dpn-01-read.prd.dpn.inmar.com:3306
+# WS Stage 02
+LocalForward	localhost:3311 stage-aurora-dpn-02-write.prd.dpn.inmar.com:3306
+#LocalForward	localhost:3311 stage-aurora-dpn-02-read.prd.dpn.inmar.com:3306
+# WS Stage 03
+LocalForward	localhost:3312 stage-aurora-dpn-03-write.prd.dpn.inmar.com:3306
+#LocalForward	localhost:3312 stage-aurora-dpn-03-read.prd.dpn.inmar.com:3306
+# WS Stage 04
+LocalForward	localhost:3313 stage-aurora-dpn-04-write.prd.dpn.inmar.com:3306
+#LocalForward	localhost:3313 stage-aurora-dpn-04-read.prd.dpn.inmar.com:3306
+
+# Camel INT
+LocalForward	localhost:5555 integration-pg-common-write.integration-vpc.prod.i.dpn.inmar.com:5432
+# Camel PROD
+LocalForward	localhost:5556 prod-camel-write.prod-vpc.prod.i.dpn.inmar.com:5432
+
+# Jenkins dbs:
+LocalForward	localhost:3316 develop-api-ws-ci-16.dev.dpn.inmar.com:3306
+LocalForward	localhost:3317 develop-api-ws-ci-17.dev.dpn.inmar.com:3306
+LocalForward	localhost:3318 develop-api-ws-ci-18.dev.dpn.inmar.com:3306
+
+# Enable bastion proxy on all non-bastion instances
+Host            !bastion* *.dpn.inmar.com
+ProxyCommand    ssh bastion -W %h:%p -q -oClearAllForwardings=no
+
+#######################################################################
+#######################################################################
+
+# dev instance
+
+Host			msteen-dev
+Hostname		DEVELOPMENT-WORK-MSTEEN-PYTHON37.dev.dpn.inmar.com
+User 			msteen
+IdentityFile    /home/msteen/.ssh/inmar/private.pem
+ProxyCommand    ssh bastion -W %h:%p -q
+ForwardAgent    yes
+# mysql
+LocalForward 	3315 127.0.0.1:3306
+# ssh - depcrecated (used by PyCharm)
+# LocalForward 	7998 127.0.0.1:22
+# WS
+LocalForward    8001 127.0.0.1:8000
+# ICE 
+LocalForward 	3000 127.0.0.1:3000
+# mongo
+LocalForward 	27018 127.0.0.1:27017
+# mimic/engagements
+LocalForward 	8087 127.0.0.1:6543
+# don't remember...
+LocalForward 	8086 127.0.0.1:80
+LocalForward 	8091 127.0.0.1:8089
+
+# dbs and services ported from dev-offer-hub
+# postgres
+LocalForward 	5432 127.0.0.1:5432
+# offer hub
+LocalForward 	6555 127.0.0.1:6555
+# tornado apps
+LocalForward 	10000 127.0.0.1:10000
+# LocalForward 	8543 127.0.0.1:80
+# LocalForward 	8544 127.0.0.1:6543
+# LocalForward 	7999 127.0.0.1:22
+# LocalForward 	10001 127.0.0.1:8089
+
+#######################################################################
+#######################################################################
+
+# Load Tests
+
+Host            STAGE-LOCUST-BASE
+Hostname        stage-load-base.prd.dpn.inmar.com
+User            msteen
+IdentityFile    /home/msteen/.ssh/keys/private.pem
+ProxyCommand    ssh bastion -W %h:%p -q
+ForwardAgent    yes
+UserKnownHostsFile=/dev/null
+LocalForward 	11111 127.0.0.1:8089
+
+Host			stage-locust
+#Hostname 		stage-hub-inbound-oh-269-locust-c.prd.dpn.inmar.com
+Hostname        stage-hub-clip-oh-220-locust.prd.dpn.inmar.com
+User 			msteen
+IdentityFile    /home/msteen/.ssh/inmar/private.pem
+ProxyCommand    ssh bastion -W %h:%p -q
+ForwardAgent    yes
+
+LocalForward	localhost:9999 127.0.0.1:8089
+
+Host			stage-load-test
+# Hostname 		stage-hub-inbound-oh-269-load-test-c.prd.dpn.inmar.com
+Hostname 		stage-load-base-1804.prd.dpn.inmar.com
+User 			msteen
+IdentityFile    /home/msteen/.ssh/inmar/private.pem
+ProxyCommand    ssh bastion -W %h:%p -q
+ForwardAgent    yes
+LocalForward	localhost:9998 127.0.0.1:8089
+LocalForward	localhost:9997 127.0.0.1:8080
+LocalForward	localhost:9996 127.0.0.1:8081
+LocalForward	localhost:9995 127.0.0.1:8082
+
+#######################################################################
+#######################################################################
+
+Host *.dpn.inmar.com
+User            msteen
+IdentityFile    /home/msteen/.ssh/inmar/private.pem
+#ProxyCommand    ssh bastion -W %h:%p -q
+ForwardAgent    yes
+
+Host prodftp
+Hostname        prod-ftp.prd.dpn.inmar.com
+User            msteen
+IdentityFile    /home/msteen/.ssh/inmar/private.pem
+ProxyCommand    ssh bastion -W %h:%p -q
+ForwardAgent    yes
