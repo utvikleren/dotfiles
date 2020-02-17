@@ -52,12 +52,8 @@ def warn_uncommitted_changes(force):
 
     If any output is found, output a warning; only continue processing if the force arg was submitted
     """
-    output = subprocess.run(
-        ["git", "status", "|", "grep", "modified", "|", "awk" "'{print $2}'"],
-        capture_output=True,
-        text=True,
-    )
-    if output.stdout:
+    output = subprocess.run(["git", "status"], capture_output=True, text=True,)
+    if "modified" in output.stdout or "Untracked" in output.stdout:
         print("Warning: repository has uncommitted changes:\n")
         print("-----------------------------------------------------------------------")
         print(f"{output.stdout}")
