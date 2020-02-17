@@ -45,7 +45,18 @@ def get_system_fullpath(filepath):
 
 
 def warn_uncommitted_changes(force):
-    output = subprocess.run(["git", "status"], capture_output=True, text=True)
+    """
+    Run bash command
+        git status | grep modified | awk '{print $2}'
+    which gets the current status of the git repo, checks for modified files, and prints just the filename
+
+    If any output is found, output a warning; only continue processing if the force arg was submitted
+    """
+    output = subprocess.run(
+        ["git", "status", "|", "grep", "modified", "|", "awk" "'{print $2}'"],
+        capture_output=True,
+        text=True,
+    )
     if output.stdout:
         print("Warning: repository has uncommitted changes:\n")
         print("-----------------------------------------------------------------------")
