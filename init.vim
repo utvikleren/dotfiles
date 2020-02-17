@@ -49,3 +49,11 @@ highlight ALEError ctermbg=01
 " map keys for navigating Ale highlights
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" map keys for vim-go
+" automatically defined:
+" ]] goes to next function declaration
+" [[ goes to previous function declaration
+nmap <silent> gr <Plug>(go-rename)
+nmap <silent> ga <Plug>(go-alternate-edit)
+nmap <silent> gi <Plug>(go-iferr)

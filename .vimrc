@@ -30,9 +30,6 @@ noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
 
-" make s delete without copying to the buffer
-nnoremap s "_d
-
 " enable code folding based on indenting, but not when opening a file
 set foldmethod=indent   
 set foldnestmax=10
@@ -41,11 +38,6 @@ set foldlevel=2
 
 " disable modelines
 set nomodeline
-
-
-" set toggle for NERDTree
-" map <C-O> :NERDTreeToggle<CR>
-
 
 " vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
