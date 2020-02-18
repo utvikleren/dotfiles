@@ -9,6 +9,7 @@ path_mappings = {
     ".bashrc": ".bashrc",
     ".bash_aliases": ".bash_aliases",
     "init.vim": ".config/nvim/init.vim",
+    "go.vim": ".config/nvim/go.vim",
     ".inputrc": ".inputrc",
     ".ssh_config": ".ssh/config",
     "tmux_base.yaml": ".tmuxp/base.yaml",
