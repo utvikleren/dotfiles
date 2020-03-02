@@ -77,9 +77,9 @@ if [ ! -f ~/google-drive/Database.kdbx ]; then
 fi
 
 export dev_instance_id="i-039a1abb1da29b81f"
-export nh_rc="RC-1.5.0"
+export nh_rc="RC-1.7.0"
 export oh_rc="RC-1.8.0"
-export ws_rc="RC-2.3.0"
+export ws_rc="RC-2.4.0"
 
 export GOPATH="/home/msteen/personal/go"
 
