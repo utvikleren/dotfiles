@@ -25,6 +25,9 @@ alias head='head -n 50'
 alias vim='nvim'
 alias vi='vim'
 
+# kill bastion connections
+alias kb='sudo kill -9 $(ps aux | grep ssh | grep bastion | awk '"'"'{print $2}'"'"')'
+
 # misc other aliases
 alias alh='alembic history | head -n 10'
 alias clam='sudo echo '\''Performing system scan...'\''; sudo clamscan --max-filesize=3999M --max-scansize=3999M --exclude-dir=/sys/* -i -r /'
@@ -139,6 +142,13 @@ alias rws="sshws; python multidb_piston/manage.py runserver 0.0.0.0:8000'"
 alias tws='~/tmux_scripts/load_WS_tmux_env.sh'
 
 alias drr='rsync -avz --exclude *.gz --exclude .git --exclude .idea /home/msteen/dpn_repos/dpn_redemption_rules msteen-dev:/home/msteen/'
+
+# ICE
+alias cdice='cd ~/dpn_repos/ice_node_api'
+alias dice='rsync -avz --exclude *.gz --exclude .git --exclude .idea /home/msteen/dpn_repos/ice_node_api msteen-dev:/home/msteen/'
+alias sshice="ssh -t msteen-dev 'cd /home/msteen/ice_node_api"
+# alias rice="sshice; /home/msteen/.nvm/versions/node/v8.12.0/bin/npm run start-local'"
+alias tice='~/tmux_scripts/load_ICE_tmux_env.sh'
 
 # OH
 alias cdoh='cd ~/dpn_repos/offer_hub'
