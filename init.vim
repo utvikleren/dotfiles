@@ -16,6 +16,12 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'davidhalter/jedi-vim'
 Plug 'dense-analysis/ale'
 
+" ultisnips is a snippets engine
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+" vim-auto_docstring uses ultisnips to auto-generate python docstrings
+Plug 'ColinKennedy/vim-auto_docstring'
+
 call plug#end()
 
 
@@ -46,6 +52,22 @@ let g:ale_linters = {
 highlight ALEError ctermfg=00
 highlight ALEError ctermbg=01
 
+""""""""""""""""""""""""""""""
+" => vim-go
+""""""""""""""""""""""""""""""
+let g:go_version_warning = 0
+
+""""""""""""""""""""""""""""""
+" => ultisnips
+""""""""""""""""""""""""""""""
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+""""""""""""""""""""""""""""""
+" => key maps
+""""""""""""""""""""""""""""""
+
 " map keys for navigating Ale highlights
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
@@ -57,3 +79,41 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 nmap <silent> gr <Plug>(go-rename)
 nmap <silent> ga <Plug>(go-alternate-edit)
 nmap <silent> gi <Plug>(go-iferr)
+
+""""""""""""""""""""""""""""""
+" => settings
+""""""""""""""""""""""""""""""
+" show line number and relative line numbers
+set number
+set relativenumber
+" but not for text files
+autocmd Filetype text setlocal nonumber norelativenumber
+
+" show existing tab with 4 spaces width
+set tabstop=4
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+
+" searching
+" highlight search results
+set hlsearch
+" search incrementally as I type
+set incsearch
+
+" enable autocomplete
+set omnifunc=syntaxcomplete#Complete
+
+" disable arrow keys
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+" enable code folding based on indenting, but not when opening a file
+set foldmethod=indent   
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
+
+" disable modelines
+set nomodeline
