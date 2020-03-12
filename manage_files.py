@@ -10,6 +10,8 @@ path_mappings = {
     ".bash_aliases": ".bash_aliases",
     ".config/nvim/init.vim": ".config/nvim/init.vim",
     ".config/nvim/go.vim": ".config/nvim/go.vim",
+    ".config/nvim/UltiSnips/python.snippets": ".config/nvim/UltiSnips/python.snippets",
+    ".config/nvim/UltiSnips/text.snippets": ".config/nvim/UltiSnips/text.snippets",
     ".inputrc": ".inputrc",
     ".ssh_config": ".ssh/config",
     "tmux_base.yaml": ".tmuxp/base.yaml",

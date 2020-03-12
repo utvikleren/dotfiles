@@ -1,0 +1,52 @@
+global !p
+def param():
+    return f":param :"
+endglobal
+
+snippet dsoriginal
+"""
+$1
+
+`!p snip.rv = param()`
+:return: $3
+"""
+endsnippet
+
+snippet p
+`!p snip.rv = param()`
+endsnippet
+
+global !p
+def params(n):
+    return "\n    ".join([f":param :" for _ in range(n)])
+endglobal
+
+# given a number of params, generate a docstring template
+snippet "ds (\d+)" r
+"""
+$1
+
+`!p
+snip.rv = params(int(match.group(1)))`
+:return:
+"""
+endsnippet
+
+# given a highlighted function definition (on one line), generate a docstring template
+# to activate (with the cursor on def): v$<tab>ds<tab>
+snippet ds
+`!p
+snip += snip.v.text + '    """'
+snip.shift()
+snip += ""
+params = snip.v.text.split("(")[1].split(")")[0].split(",")
+for param in params:
+	param = param.split("=")[0]
+	snip += f":param {param}: "
+snip += ":return:"
+snip += '"""'
+snip.unshift()
+snip += ""
+`
+endsnippet
+
