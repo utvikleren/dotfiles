@@ -19,8 +19,6 @@ Plug 'dense-analysis/ale'
 " ultisnips is a snippets engine
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-" vim-auto_docstring uses ultisnips to auto-generate python docstrings
-Plug 'ColinKennedy/vim-auto_docstring'
 
 call plug#end()
 
@@ -61,8 +59,8 @@ let g:go_version_warning = 0
 " => ultisnips
 """"""""""""""""""""""""""""""
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<shift-tab>"
 
 """"""""""""""""""""""""""""""
 " => key maps
