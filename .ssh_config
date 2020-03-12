@@ -14,6 +14,9 @@ User            msteen
 IdentityFile    /home/msteen/.ssh/inmar/private.pem
 ForwardAgent    yes
 
+# QA EKS (K8s) Cluster
+LocalForward    localhost:9192 EC9198266BD6390AC796624DFAC0516C.gr7.us-east-1.eks.amazonaws.com:443
+
 # QA API
 LocalForward	localhost:8765 qa-api.dev.dpn.inmar.com:80
 
